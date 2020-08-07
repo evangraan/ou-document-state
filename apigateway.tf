@@ -1,7 +1,3 @@
-# Currently using amplify (js) ! Not REST
-
-# Need Solution atchitecure diagrams and HLDs
-
 resource "aws_api_gateway_rest_api" "api" {
   name = "ou-documents-api"
 }

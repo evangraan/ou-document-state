@@ -1,5 +1,3 @@
-# Organizational units - call these "sites" and "ods codes"
-
 resource "aws_iam_group" "ous" {
   for_each = var.ou_ids
   name  = "ou_${each.value}"
