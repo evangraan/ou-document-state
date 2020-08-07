@@ -1,14 +1,14 @@
 # Organizational units - call these "sites" and "ods codes"
 
 resource "aws_iam_group" "ous" {
-  count  = length(var.ou_ids)
-  name  = "ou_${element(var.ou_ids, count.index)}"
+  for_each = var.ou_ids
+  name  = "ou_${each.value}"
   path = "/ous/"
 }
 
 resource "aws_iam_policy" "ous-group-policy-id" {
-  count  = length(var.ou_ids)
-  name        = "ous-group-policy-${element(var.ou_ids, count.index)}"
+  for_each    = var.ou_ids
+  name        = "ous-group-policy-${each.value}"
   description = "Permissions for ous group"
   policy = <<POLICY
 {
@@ -21,7 +21,8 @@ resource "aws_iam_policy" "ous-group-policy-id" {
         "s3:GetBucketLocation"
       ],
       "Effect": "Allow",
-      "Resource": "arn:aws:s3:::ou-document-state/documents/${element(var.ou_ids, count.index)}"
+
+      "Resource": "arn:aws:s3:::ou-document-state/documents/${each.value}"
     }   
   ]
 }
@@ -29,9 +30,9 @@ resource "aws_iam_policy" "ous-group-policy-id" {
 }
 
 resource "aws_iam_group_policy_attachment" "ous-group-policy-attach" {
-  count  = length(var.ou_ids)
-  group  = "ou_${element(var.ou_ids, count.index)}"
-  policy_arn = "arn:aws:iam::477493894311:policy/ous-group-policy-${element(var.ou_ids, count.index)}"
+  for_each = var.ou_ids
+  group  = "ou_${each.value}"
+  policy_arn = "arn:aws:iam::477493894311:policy/ous-group-policy-${each.value}"
 }
 
 # API gateway and lambda

@@ -1,21 +1,3 @@
-# Aplify can do S3 work- do not need lambdas
-
-# Architecture concerns:
-## amplify coupling 
-## ISC coupling via IAM
-## list of tech debt items
-
-# future sessions
-## nix
-## aws vault
-## aws terraform
-## deploy to test
-## deploy to production
-## ci
-
-# Notes
-## use 0.12.28
-
 resource "aws_lambda_permission" "apigw_lambda" {
   statement_id  = "AllowExecutionFromAPIGateway"
   action        = "lambda:InvokeFunction"

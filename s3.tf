@@ -1,6 +1,5 @@
-
 locals {
-	folders = "${setproduct(var.ou_ids, var.ou_states)}"
+    folders = "${setproduct(keys(var.ou_ids), var.ou_states)}"
 }
 
 resource "aws_s3_bucket_object" "documents-folder" {
@@ -11,7 +10,7 @@ resource "aws_s3_bucket_object" "documents-folder" {
 }
 
 resource "aws_s3_bucket_object" "documents-states" {
-    count  = length(var.ou_ids) * length(var.ou_states)
+    count  = length(keys(var.ou_ids)) * length(var.ou_states)
     bucket = "ou-document-state"
     acl    = "private"
     key    = "documents/${element(local.folders, count.index)[0]}/${element(local.folders, count.index)[1]}/"
